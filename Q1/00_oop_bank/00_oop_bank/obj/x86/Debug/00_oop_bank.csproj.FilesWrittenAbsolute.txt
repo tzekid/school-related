@@ -1,0 +1,5 @@
+/media/tzekid/Kinky_Disk/Documenta/schola/Q1/Progi/00_oop_bank/00_oop_bank/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/media/tzekid/Kinky_Disk/Documenta/schola/Q1/Progi/00_oop_bank/00_oop_bank/bin/Debug/00_oop_bank.exe.mdb
+/media/tzekid/Kinky_Disk/Documenta/schola/Q1/Progi/00_oop_bank/00_oop_bank/bin/Debug/00_oop_bank.exe
+/media/tzekid/Kinky_Disk/Documenta/schola/Q1/Progi/00_oop_bank/00_oop_bank/obj/x86/Debug/00_oop_bank.exe
+/media/tzekid/Kinky_Disk/Documenta/schola/Q1/Progi/00_oop_bank/00_oop_bank/obj/x86/Debug/00_oop_bank.exe.mdb

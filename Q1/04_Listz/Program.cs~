@@ -1,0 +1,190 @@
+using System;
+
+/*** v.0.1.0
+ * TODOz(kid):
+ *  [x] get teh basic stuff working
+ */
+// dick
+namespace VerketteteListe {
+    public class VL01 {
+
+        public class Node {
+            public string value;
+            public Node nextElement = null;
+        }
+
+        public class VerketteteListe {
+            public Node head = new Node();
+            public Node body = new Node();
+
+            public void add_ (Node node) {
+                if (this.head.value == null)
+                    this.head = node;
+                else if (this.head.value != null && this.body.value == null) {
+                    this.body = node;
+                    this.head.nextElement = node;
+                } else {
+                    this.body.nextElement = node;
+                    this.body = node;
+                }
+            }
+
+            /*
+            public void add (Node node) {
+                if (this.head.value == null) {
+                    this.head = node;
+                } else if (this.head.value != null && this.body.value == null) {
+                    if (head.value.CompareTo(node.value) == 1) {
+                        this.body = this.head;
+                        this.head = node;
+                        this.head.nextElement = this.body;
+                    } else {
+                        this.body = node;
+                        this.head.nextElement = body;
+                    }
+                } else {
+                    Node tempNode = this.head;
+                    Node anotherN = new Node();
+                    while (tempNode != null) {
+                        if (tempNode.value.CompareTo(node.value) == 1) {
+                            tempNode = tempNode.nextElement;
+                        } else {
+                            if (tempNode == this.head) {
+                                this.head = node;
+                                anotherN = this.body;
+
+                                this.body = tempNode;
+                                this.body.nextElement = anotherN.nextElement;
+                                this.head.nextElement = this.body;
+
+                                this.add(anotherN);
+                            } else {
+                                anotherN = tempNode;
+                            }
+                        }
+                    }
+                }
+            }
+            */
+
+            public int count () {
+                int c = 1;
+                Node tempNode = this.head;
+
+                while(tempNode.nextElement != null) {
+                    c++;
+                    tempNode = tempNode.nextElement;
+                }
+
+                return c;
+            }
+
+            public Node find (string value) {
+                Node tempNode = this.head;
+
+                while (tempNode.nextElement != null) {
+                    if (tempNode.value == value)
+                        return tempNode;
+                }
+
+                Console.WriteLine("There is no object w/ the value: '"+ value +"' in this list.");
+                return null;
+            }
+
+            public int findNodePos(Node node) {
+                Node tempNode = this.head;
+                int cunter = 0;
+
+                while (tempNode != node) {
+                    cunter ++;
+
+                    tempNode = tempNode.nextElement;
+                    if (tempNode == null) return -1;
+                }
+
+                return cunter;
+            }
+
+            public void changeAtPos (int pos, Node node) {
+                Node tempNode = this.head;
+                Node tempNextNode = new Node();
+                Node tempNextNextNode = new Node();
+
+                int cunt = this.count() - 1;
+                while (cunt < this.count() - 1) {
+                    tempNode = tempNode.nextElement;
+                    tempNextNode = tempNode.nextElement;
+                }
+
+                tempNextNextNode = tempNextNode.nextElement;
+
+                if (node == null) {
+                    tempNode.nextElement = tempNextNextNode;
+                } else if (cunt == 0) {
+                    node.nextElement = this.head.nextElement;
+                    this.head = node;
+                } else {
+                    tempNode.nextElement = node;
+                    tempNextNode = node;
+                    tempNextNode.nextElement = tempNextNextNode;
+                }
+            }
+
+            public void remove(Node node) {
+                Node oldNode = this.head;
+                Node tempNode = new Node();
+
+                int pos = findNodePos(node);
+
+                changeAtPos(pos, null);
+            }
+
+            public override string ToString() {
+                Node tempNode = this.head;
+                string tempString = this.GetType().Name.ToString() + ": [";
+                while (tempNode != null) {
+                    if (tempNode.nextElement != null) {
+                        tempString += " \"" + tempNode.value + "\", ";
+                    } else {
+                        tempString += " \"" + tempNode.value + "\", null ]";
+                    }
+                    tempNode = tempNode.nextElement;
+                }
+
+                return tempString;
+            }
+        }
+
+        public static void Main(string[] args) {
+            VerketteteListe vl = new VerketteteListe();
+
+            Node nad1 = new Node();
+            Node nad2 = new Node();
+            Node nad3 = new Node();
+
+            nad1.value = "dick";
+            nad2.value = "butt";
+            nad3.value = "tape";
+
+            vl.add(nad1);
+            vl.add(nad2);
+            vl.add(nad3);
+
+            int d = vl.count();
+
+            Console.WriteLine(d);
+            Console.WriteLine("\n");
+
+            Console.WriteLine(nad1.value);
+            Console.WriteLine(nad2.value);
+            Console.WriteLine(nad3.value);
+            Console.WriteLine("\n");
+
+            Console.WriteLine(vl.head.value);
+            Console.WriteLine(vl.body.value);
+
+            Console.WriteLine("\n");
+            Console.WriteLine(vl);
+        }
+    }
+}
