@@ -77,7 +77,7 @@ namespace ConsoleApplication {
                 else if (inputs[0] == "add") {
                     if (inputs[1] == "all") {
                         if (listz.ContainsKey(inputs[2]))
-                            foreach (var node in nodez) listz[inputs[2]].add(nodez[node.Key]);
+                            foreach (var node in nodez) listz[inputs[2]]._add(nodez[node.Key]);
                         else Console.WriteLine("usage: add all {list}");
                     } else {
                     try {

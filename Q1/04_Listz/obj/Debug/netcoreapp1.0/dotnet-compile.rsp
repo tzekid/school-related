@@ -1,5 +1,5 @@
---temp-output:/home/tzekid/Projects/code/04_Listz/obj/Debug/netcoreapp1.0/
---out:/home/tzekid/Projects/code/04_Listz/bin/Debug/netcoreapp1.0/04_Listz.dll
+--temp-output:/home/tzekid/Projects/school-related/Q1/04_Listz/obj/Debug/netcoreapp1.0/
+--out:/home/tzekid/Projects/school-related/Q1/04_Listz/bin/Debug/netcoreapp1.0/04_Listz.dll
 --define:DEBUG
 --define:TRACE
 --define:NETCOREAPP1_0
@@ -10,9 +10,9 @@
 --debug-type:portable
 --emit-entry-point:True
 --output-name:04_Listz
---file-version:1.1.0.0
---version:1.1.0.0
---informational-version:1.1.0
+--file-version:1.0.0.0
+--version:1.0.0.0
+--informational-version:1.0.0
 --target-framework:.NETCoreApp,Version=v1.0
 --reference:/home/tzekid/.nuget/packages/Microsoft.CSharp/4.0.1/ref/netstandard1.0/Microsoft.CSharp.dll
 --reference:/home/tzekid/.nuget/packages/Microsoft.VisualBasic/10.0.1/ref/netstandard1.1/Microsoft.VisualBasic.dll
@@ -87,5 +87,5 @@
 --reference:/home/tzekid/.nuget/packages/System.Threading.Timer/4.0.1/ref/netstandard1.2/System.Threading.Timer.dll
 --reference:/home/tzekid/.nuget/packages/System.Xml.ReaderWriter/4.0.11/ref/netstandard1.3/System.Xml.ReaderWriter.dll
 --reference:/home/tzekid/.nuget/packages/System.Xml.XDocument/4.0.11/ref/netstandard1.3/System.Xml.XDocument.dll
-/home/tzekid/Projects/code/04_Listz/List.cs
-/home/tzekid/Projects/code/04_Listz/Program.cs
+/home/tzekid/Projects/school-related/Q1/04_Listz/List.cs
+/home/tzekid/Projects/school-related/Q1/04_Listz/Program.cs

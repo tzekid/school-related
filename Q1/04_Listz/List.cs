@@ -1,5 +1,7 @@
 using System;
 
+// [ ] objeketn
+// [ ] generische Liste
 
 namespace DataTypes {
     public class Types {
@@ -26,6 +28,42 @@ namespace DataTypes {
                 }
                 if (this.debg) Console.WriteLine(this);
             }
+
+
+            // recursive sorted add
+            public void _add(Node node) {
+                if (this.head.value == null) {
+                    this.head = node;
+                } else if (this.body.value == null) {
+                    if (this.head.value.CompareTo(this.body.value) != 1) {
+                        this.body = node;
+                        this.head.nextElement = this.body;
+                    } else {
+                        this.body = this.head;
+                        this.head = node;
+                        this.head.nextElement = this.body;
+                    }
+                } else {
+                    Node prevNode = this.head;
+                    Node currNode = this.head.nextElement;
+                    Node nextNode = currNode.nextElement;
+
+                    while(true) {
+                        if (node.value.CompareTo(currNode.value) != 1) {
+                            prevNode.nextElement = node;
+                            node.nextElement = nextNode;
+                            this._add(currNode);
+                        } else {
+                            prevNode = currNode;
+                            currNode = nextNode;
+                            nextNode = nextNode.nextElement;
+                        }
+
+                        if (nextNode == null) break;
+                    }
+                }
+            }
+
 
             public void add (Node node) {
                 Node prevNode = new Node();
