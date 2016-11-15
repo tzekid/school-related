@@ -2,28 +2,11 @@ using System;
 using System.Collections.Generic;
 using DataTypes;
 
-/*** Listz **
-/** v.0.2.0
- * TODOz(kid)
- *  [ ] fix the `add all list` bug
- *  [|] interactive mode
- *   +--> [x] create list
- *   +--> [x] create node
- *   +--> [x] list lists
- *   +--> [x] list nodes
- *   +--> [ ] help
- *   +--> [x] quit
- * [ ] have a wank
- */
-
-/*** v.0.1.5
- * TODOz(kid):
- *  [x] alp. sort of all added nodes @ add()
- */
-
-/*** v.0.1.0
- * TODOz(kid):
- *  [x] get teh basic stuff working
+/*** Listz *** !!!
+/** Teh code was done 
+ * in a rush in ~1.5h.
+ * Most of the code looks functional.
+ * The looks can be deceiving.
  */
 
 namespace ConsoleApplication {

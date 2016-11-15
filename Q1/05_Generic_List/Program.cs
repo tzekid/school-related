@@ -130,21 +130,33 @@ namespace ConsoleApplication {
                 } return count;
             }
 
-            public void changeAtPos(int pos, T data) {
-                Node prevNode = this.head;
-                Node currNode = this.head.next;
-                Node nextNode = this.head.next.next;
+            public void changeAtPos(int pos, T data, bool sort = false) {
+                Node prevNode = new Node(deft);
+                Node currNode = this.head;
+                Node nextNode = this.head.next;
 
-                // cases: [ head, null ] & [ head, node, null ]
-                // cases: pos > count && pos < 0
-                // case : pos == 0 && pos == 1
+                if (pos > this.count()) {
+                    Console.WriteLine("Pos " + pos + " is out of range.");
+                    return;
+                } else if (pos == this.count() - 1) {
+                    Console.WriteLine("Pos " + pos + " is null. Cannot change the val of `null`.");
+                    return;
+                }
 
-                int cunt = 1;
-                while (cunt < count() - 1) {
+                int cunt = 0;
+                while (cunt < pos) {
+                    Console.WriteLine("\nprevNode: " + prevNode.data + "\ncurrNode: " + currNode.data + "\nnextNode: " + nextNode.data);
                     prevNode = currNode;
                     currNode = nextNode;
                     nextNode = nextNode.next;
+
+                    cunt++;
                 }
+
+                if (sort) {
+                    prevNode.next = nextNode;
+                    this.add(data);
+                } else currNode.data = data;
 
                 Console.WriteLine("\nprevNode: " + prevNode.data + "\ncurrNode: " + currNode.data + "\nnextNode: " + nextNode.data);
             }
@@ -171,8 +183,6 @@ namespace ConsoleApplication {
             intList.add(9);
             intList.add(6);
 
-            intList.changeAtPos(2, 5);
-
             // GenList<string> strList = new GenList<string>();
             // strList.add("dick");
             // strList.add("butt");
@@ -181,6 +191,10 @@ namespace ConsoleApplication {
 
             Console.WriteLine("\n" + intList);            
             // Console.WriteLine("\n" + strList);
+
+            intList.changeAtPos(5, 99);
+
+            Console.WriteLine("\n" + intList);                        
         }
     }
 }
