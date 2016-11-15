@@ -202,6 +202,7 @@ namespace DataTypes {
                 }
             }
 
+            // rewrite remove :))
             public void remove(Node node) {
                 Node oldNode = this.head;
                 Node tempNode = new Node();
