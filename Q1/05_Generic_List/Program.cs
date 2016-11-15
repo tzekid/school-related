@@ -127,8 +127,7 @@ namespace ConsoleApplication {
                 while (tempNode != null) {
                     count++;
                     tempNode = tempNode.next; 
-                }
-                return count;
+                } return count;
             }
 
             public void changeAtPos(int pos, T data) {
@@ -140,8 +139,8 @@ namespace ConsoleApplication {
                 // cases: pos > count && pos < 0
                 // case : pos == 0 && pos == 1
 
-                int cunt = 0;
-                while (cunt < count() - 3) {
+                int cunt = 1;
+                while (cunt < count() - 1) {
                     prevNode = currNode;
                     currNode = nextNode;
                     nextNode = nextNode.next;
