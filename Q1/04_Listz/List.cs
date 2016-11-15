@@ -1,7 +1,11 @@
 using System;
 
-// [ ] objeketn
-// [ ] generische Liste
+/*** Listz *** !!!
+/** Teh code was done 
+ * in a rush in ~1.5h.
+ * Most of the code looks functional.
+ * The looks can be deceiving.
+ */
 
 namespace DataTypes {
     public class Types {
