@@ -19,6 +19,13 @@ namespace ConsoleApplication {
             // default value of T; can be used as a null placeholder
             T deft = default(T);
 
+            public string codeToString(int c) {
+                if      (c ==  1) return "bigger than";
+                else if (c ==  0) return "equal to";
+                else if (c == -1) return "smaller than";
+                else              return "you don' fucked up";
+            }
+
             public void add(T data) {
                 Console.WriteLine("\nLooking into " + data);
                 Node tempNode = new Node(default(T));
@@ -64,7 +71,7 @@ namespace ConsoleApplication {
                             prevNode = currNode;
                             currNode = nextNode;
                             nextNode = nextNode.next;
-                            Console.WriteLine("dis be to that: " + data.CompareTo(currNode.data));
+                            Console.WriteLine(data + " is " + codeToString(data.CompareTo(currNode.data)) + " " + currNode.data);
                         } else {
                             Console.WriteLine("Dude ... you broke teh Matrix");
                             break;
@@ -124,22 +131,29 @@ namespace ConsoleApplication {
                 return count;
             }
 
-            // public void changeAtPos(int pos, T data) {
-            //     Node prevNode = this.head;
-            //     Node currNode = this.head.next;
-            //     Node nextNode = this.head.next.next;
+            public void changeAtPos(int pos, T data) {
+                Node prevNode = this.head;
+                Node currNode = this.head.next;
+                Node nextNode = this.head.next.next;
 
-            //     int cunt = this.count() - 1;
-            //     while (cunt < this.count()) {
-            //         prevNode = currNode;
-            //         currNode = nextNode;
-            //         nextNode = nextNode.next;
-            //     }
-            // }
+                // cases: [ head, null ] & [ head, node, null ]
+                // cases: pos > count && pos < 0
+                // case : pos == 0 && pos == 1
+
+                int cunt = 0;
+                while (cunt < count() - 3) {
+                    prevNode = currNode;
+                    currNode = nextNode;
+                    nextNode = nextNode.next;
+                }
+
+                Console.WriteLine("\nprevNode: " + prevNode.data + "\ncurrNode: " + currNode.data + "\nnextNode: " + nextNode.data);
+            }
 
             public override string ToString()  {
                 Node tempNode = this.head;
-                string tempString = this.GetType().Name.ToString() + ": [";
+                // string tempString = this.GetType().Name.ToString() + ": [";
+                string tempString = "[";
                 while (tempNode != null) {
                     if (tempNode.next != null) tempString += " \"" + tempNode.data + "\", ";
                     else                       tempString += " \"" + tempNode.data + "\", null ]";
@@ -158,13 +172,15 @@ namespace ConsoleApplication {
             intList.add(9);
             intList.add(6);
 
+            intList.changeAtPos(2, 5);
+
             // GenList<string> strList = new GenList<string>();
             // strList.add("dick");
             // strList.add("butt");
             // strList.add("head");
             // strList.add("arse");
 
-            Console.WriteLine("\n" + intList);
+            Console.WriteLine("\n" + intList);            
             // Console.WriteLine("\n" + strList);
         }
     }
