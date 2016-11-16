@@ -1,12 +1,5 @@
 using System;
 
-/*** Listz *** !!!
-/** Teh code was done 
- * in a rush in ~1.5h.
- * Most of the code looks functional.
- * The looks can be deceiving.
- */
-
 namespace DataTypes {
     public class Types {
         public class Node {
@@ -206,7 +199,6 @@ namespace DataTypes {
                 }
             }
 
-            // rewrite remove :))
             public void remove(Node node) {
                 Node oldNode = this.head;
                 Node tempNode = new Node();
