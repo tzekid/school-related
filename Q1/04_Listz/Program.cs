@@ -4,7 +4,7 @@ using DataTypes;
 
 /*** Listz *** !!!
 /** Teh code was done 
- * in a rush in ~1.5h.
+ * in a rush in T minus 30 minutes.
  * Most of the code looks functional.
  * The looks can be deceiving.
  */
