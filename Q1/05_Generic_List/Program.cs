@@ -183,14 +183,14 @@ namespace ConsoleApplication {
             intList.add(9);
             intList.add(6);
 
-            // GenList<string> strList = new GenList<string>();
-            // strList.add("dick");
-            // strList.add("butt");
-            // strList.add("head");
-            // strList.add("arse");
+            GenList<string> strList = new GenList<string>();
+            strList.add("dick");
+            strList.add("butt");
+            strList.add("head");
+            strList.add("arse");
 
             Console.WriteLine("\n" + intList);            
-            // Console.WriteLine("\n" + strList);
+            Console.WriteLine("\n" + strList);
 
             intList.changeAtPos(5, 99);
 

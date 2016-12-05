@@ -1,5 +1,5 @@
---temp-output:/media/tzekid/Kinky_Disk/Documenta/schola/Q1/Progi/01_oop_bank/obj/Debug/netcoreapp1.0/
---out:/media/tzekid/Kinky_Disk/Documenta/schola/Q1/Progi/01_oop_bank/bin/Debug/netcoreapp1.0/01_oop_bank.dll
+--temp-output:/home/tzekid/Projects/tzekid/school-related/Q1/01_oop_bank/obj/Debug/netcoreapp1.0/
+--out:/home/tzekid/Projects/tzekid/school-related/Q1/01_oop_bank/bin/Debug/netcoreapp1.0/01_oop_bank.dll
 --define:DEBUG
 --define:TRACE
 --define:NETCOREAPP1_0
@@ -87,4 +87,4 @@
 --reference:/home/tzekid/.nuget/packages/System.Threading.Timer/4.0.1/ref/netstandard1.2/System.Threading.Timer.dll
 --reference:/home/tzekid/.nuget/packages/System.Xml.ReaderWriter/4.0.11/ref/netstandard1.3/System.Xml.ReaderWriter.dll
 --reference:/home/tzekid/.nuget/packages/System.Xml.XDocument/4.0.11/ref/netstandard1.3/System.Xml.XDocument.dll
-/media/tzekid/Kinky_Disk/Documenta/schola/Q1/Progi/01_oop_bank/Program.cs
+/home/tzekid/Projects/tzekid/school-related/Q1/01_oop_bank/Program.cs
