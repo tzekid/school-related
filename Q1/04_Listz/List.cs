@@ -1,20 +1,7 @@
 using System;
-<<<<<<< HEAD
-=======
-using System.Collections.Generic;
-using DataTypes;
 
-/*** Listz *** !!!
-/** Teh code was done 
- * in a rush in T minus 30 minutes.
- * Most of the code looks functional.
- * The looks can be deceiving.
- */
->>>>>>> 4ee1d731af11c0d2a983cbca6a32a7ba3450460f
-
-namespace ConsoleApplication {
-    public class Program {
-
+namespace DataTypes {
+    public class Types {
         public class Node {
             public string value = null;
             public Node nextElement = null;
@@ -38,6 +25,7 @@ namespace ConsoleApplication {
                 }
                 if (this.debg) Console.WriteLine(this);
             }
+
 
             // recursive sorted add
             public void _add(Node node) {
@@ -211,7 +199,6 @@ namespace ConsoleApplication {
                 }
             }
 
-            // rewrite remove :))
             public void remove(Node node) {
                 Node oldNode = this.head;
                 Node tempNode = new Node();
@@ -235,9 +222,6 @@ namespace ConsoleApplication {
 
                 return tempString;
             }
-        }
-
-        public static void Main(string[] args) {
         }
     }
 }
