@@ -1,6 +1,4 @@
 using System;
-<<<<<<< HEAD
-=======
 using System.Collections.Generic;
 using DataTypes;
 
@@ -10,7 +8,6 @@ using DataTypes;
  * Most of the code looks functional.
  * The looks can be deceiving.
  */
->>>>>>> 4ee1d731af11c0d2a983cbca6a32a7ba3450460f
 
 namespace ConsoleApplication {
     public class Program {
