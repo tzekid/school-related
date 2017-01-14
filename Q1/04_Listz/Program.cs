@@ -1,12 +1,9 @@
 using System;
-using System.Collections.Generic;
-using DataTypes;
 
-/*** Listz *** !!!
-/** Teh code was done 
- * in a rush in T minus 30 minutes.
- * Most of the code looks functional.
- * The looks can be deceiving.
+/* [ ] recursive simple add
+ * [ ] recursive count
+ * [ ] recursive changeatpos
+ * [ ] recursive remove
  */
 
 namespace ConsoleApplication {
@@ -17,12 +14,12 @@ namespace ConsoleApplication {
             public Node nextElement = null;
         }
 
-        public class LinkedList {
+        public class VerketteteListe {
             public Node head = new Node();
             public Node body = new Node();
             public bool debg = true;
 
-            // Unsorted add
+            // Simple Add
             public void add_ (Node node) {
                 if (this.head.value == null)
                     this.head = node;
@@ -70,7 +67,7 @@ namespace ConsoleApplication {
                 }
             }
 
-
+            
             public void add (Node node) {
                 Node prevNode = new Node();
                 Node currNode = new Node();
