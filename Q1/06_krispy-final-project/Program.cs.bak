@@ -1,0 +1,101 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
+
+/* TODOz:
+ * - [x] Get an interactive prompt working
+ * - [ ] Parsing (?-> AST)
+ * - [ ] Evaluating( Add | Subtract | Divide | Multiply )
+ * - [ ] Error-Handling( Divide by Zero | Wrong input | etc. )
+ * - [ ] ...
+ * - [ ] Variables
+ * - [ ] ...
+ * - [ ] Profit
+ */
+
+namespace ConsoleApplication {
+  public class Krispy {
+    public enum type { NUM, SYM, ERR }
+    public static string SYMBOL = "+-/*";
+
+    // EVERYTHING is a token
+    public unsafe struct Token {
+      type tokenType;
+      char* value;
+
+      unsafe public Token(type t, char* val) {
+        tokenType = t;
+        value = val;
+      }
+      
+      // enum.ToString("G") => returns typeName insead of value
+      public override string ToString() { 
+        string v = new string(value);
+        return "Token { " + this.tokenType.ToString("G") + "," + v + " }";
+      }
+    }
+
+    public unsafe class Interpreter {
+      List<string> text;
+      int Length;
+      int pos = 0;
+      Token* Tokens;
+
+      public Interpreter(string text) { 
+        this.text = text.Split(' ').ToList();
+      }
+
+      unsafe public Token returnToken() {
+        char[] text_array = text[pos].ToCharArray();
+        
+        fixed(char* tempText = text_array)
+        {
+          double number;
+          if (double.TryParse(text[pos], out number)) {
+            pos++;
+            return new Token(type.NUM, tempText);
+          }
+
+          else if (SYMBOL.Contains(text[pos])) {
+            pos++;
+            return new Token(type.SYM, tempText);
+          }
+        }
+
+        return new Token(type.ERR, null);
+      }
+
+      public void printTokens() {
+        foreach (var x in this.text)
+          Console.WriteLine(this.returnToken());
+      }
+    }
+  }
+
+  public class Program {
+    /* GLOBALS */
+    public unsafe static void puts(string dick) { Console.WriteLine(dick); }
+
+
+    /* MAIN */
+    public static void Main(string[] args) {
+      puts("BOF");
+      
+      Krispy krispy = new Krispy();
+      Krispy.Interpreter inter;
+
+      string input;
+      do {
+        Console.Write("krispy> ");
+        input = Console.ReadLine();
+        
+        inter = new Krispy.Interpreter(input);
+        inter.printTokens();
+
+      } while(input != "exit");
+
+      puts("EOF");
+    }
+  }
+}

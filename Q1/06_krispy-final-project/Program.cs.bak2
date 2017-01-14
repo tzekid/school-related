@@ -1,0 +1,107 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace ConsoleApplication {
+  public unsafe class Krispy {
+    enum tType { SYM, NUM, STR, LPAREN, RPAREN };
+    public static List<string> symbols = 
+      new List<string>( new string[] { "+", "-", "/", "*" } );
+
+    unsafe struct ast {
+      string tag;
+      string contents;
+      int child_num;
+      List<ast> children;
+    }
+
+    struct Token {
+      public tType tokenType;
+      public string data;
+
+      static  bool isSymbol(string word) {
+        foreach (string sym in symbols)
+          if (sym == word) return true;
+        
+        return false;
+      }
+
+      public Token(string str) {
+        this.data = str;
+        int num;
+        
+        if (isSymbol(str)) this.tokenType = tType.SYM;
+        
+        // ... or if is a number.
+        else if (int.TryParse(str, out num)) this.tokenType = tType.NUM;
+        
+        else {
+          // throw new System.ArgumentException("'"+ str + "' was not recognised when converting to Token.");
+          this.tokenType = tType.STR;
+        }
+      }
+      
+      // enum.ToString("G") => returns typeName instead of data
+      public override string ToString() { 
+        return "=> Token(" + this.tokenType.ToString("G") + ", '" + data + "')";
+      }
+    }
+
+    // a lexer do what a lexer does
+    public class Lexer {
+
+    }
+
+    public class Interpreter {
+      List<Token> tokens = new List<Token>();
+      
+      public void interpret(string str) {
+        List<string> words = str.Split(new char[] { ' ' }).ToList();
+        
+        foreach (string tok in words)
+          tokens.Add(new Token(tok));
+      }
+
+      public void evalTokens() { 
+        if (tokens.Count() <= 0) Console.WriteLine("Expecting a valid expression.");
+        else if (tokens.Count() == 1) {
+          if (tokens[0].tokenType == tType.NUM) Console.WriteLine(tokens[0].data);
+          else if (tokens[0].tokenType == tType.SYM) Console.WriteLine("Invalid expression");
+        }
+        else { }
+      }
+      
+      public void printAllTokens() {
+        foreach (Token tok in tokens)
+          Console.WriteLine(tok);
+      }
+
+      public void delTokList() {
+        tokens.Clear();
+      }
+    }
+
+    public Krispy() {
+      string input; 
+      Interpreter intrprt = new Interpreter();
+
+      Console.WriteLine("Welcome to Krispy v.0.0.0.0.0.0.0.0");
+      while(true) {
+        Console.Write("Krispy> ");
+        input = Console.ReadLine();
+
+        if (input == "exit") break;
+
+        intrprt.interpret(input);
+        intrprt.printAllTokens();
+        intrprt.delTokList();
+      }
+    }
+  }
+
+  public class Program {
+    public static void Main(string[] args) { 
+      Krispy dick = new Krispy();
+    }
+  }
+}

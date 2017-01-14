@@ -1,0 +1,253 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+// using System.Text.RegularExpressions;
+
+namespace ConsoleApplication {
+  public class Krispy {
+
+    // Token
+    public struct Token {
+      public string tag
+                  , data;
+
+      public Token(string tag, string data) {
+        this.tag = tag;
+        this.data = data;
+      }
+
+      public override string ToString() { 
+        return String.Format("=> Token({0, 6}, \"{1}\")", tag, data);
+      }
+    }
+
+
+    public class Node {
+      public string type = "",
+                    data = "";
+      
+      public List<Node> children = new List<Node>();
+      public void addChild(Node child) {  children.Add(child); } 
+
+      public Node parent;
+      public int pos;
+
+
+      public Node(string type, string data) {
+        // this.pos = -1;
+        this.type = type;
+        this.data = data;
+      }
+    }
+
+    // Der Lexer wandelt den Input in Tokens
+    public class Lexer {
+      public int pos = 0;
+      public List<Token> tokens;
+      static List<string> symbols =
+        new List<string>( new string[] {"+", "-", "/", "*"} );
+
+      static bool isSymbol(string isym) {
+        foreach (string sym in symbols)
+          if (sym == isym) return true;
+        return false;
+      }
+
+      public void lex(string source) {
+        tokens = new List<Token>();
+        List<string> words = source.Split().ToList();
+        double test_if_num;
+
+        foreach (string word in words) {
+          if (word == "" || word == " " || word == "\r")       continue;   //------------------------- REGEXP IF NOT NUMBER SYMBOL OR LETTER
+          else if (isSymbol(word))                             tokens.Add( new Token("SYM", word) );
+          else if (double.TryParse(word, out test_if_num))     tokens.Add( new Token("NUM", word) );
+          else if (word == "(")                                tokens.Add( new Token("LPAR", "(") );
+          else if (word == ")")                                tokens.Add( new Token("RPAR", ")") );
+          else { // ----------- Add a case for Err in Parser &co.
+            tokens.Clear();
+            tokens.Add( new Token("ERR", word) );
+            Console.WriteLine(tokens[0]);
+            return;
+          }
+        }
+      }
+
+      public void printTokens() {
+        foreach (Token token in tokens)
+          Console.WriteLine(token);
+      }
+
+      public Lexer(string source = "") { this.lex(source); }
+    }
+
+    // Syntax & Semantic analyser
+    // Take Token[] -> Node[] AST
+    public class Parser {
+      public Node ROOT;
+
+      public void parse(Lexer lex) {
+        ROOT = new Node("NULL", "NULL");
+        
+        int pos = 0;
+
+        Token tempToken = new Token("NULL", "NULL");
+        Node tempBranch = new Node("NULL", "NULL");;
+        Node currBranch = ROOT;
+
+        foreach (Token token in lex.tokens) {
+          switch (token.tag) {
+          case "LPAR":
+            if (ROOT.type == "NULL") break;
+            tempBranch = currBranch;
+            currBranch = new Node("NULL", "NULL");
+            
+            currBranch.pos = pos;
+            currBranch.parent = tempBranch;
+            
+            tempBranch.addChild( currBranch );
+            pos = 0;
+            break;
+
+          case "SYM":
+            currBranch.type = "EXPR";
+            currBranch.data = token.data;
+
+            break;
+          
+          case "NUM":
+            currBranch.addChild( new Node(token.tag, token.data) ); pos++; break;
+          
+          case "RPAR":
+            if (currBranch.parent == null) break;
+            
+            currBranch = currBranch.parent;
+            pos = currBranch.pos;
+            break;
+
+          default: Console.WriteLine("ParseErr@{0}", pos); break; }
+          
+          tempToken = token;
+        }
+      }
+    }
+
+
+    // Take AST -> Result
+    public class Eval {
+      public string eval(Node node) {
+        // foreach (Node branch in node.children)
+        Node branch = new Node("NULL", "NULL");
+          
+        for (int i = 0; i < node.children.Count(); i++)
+          branch = node.children[i];
+          
+          Console.WriteLine("Branch POS is " + branch.pos);
+
+          if (branch.type == "EXPR") {
+            string result = eval(branch);
+            // node.children.Remove(branch);
+            Console.WriteLine(branch.pos);
+            node.children.Insert(branch.pos, new Node("NUM", result));
+          }
+
+        string tempdata = "";
+
+        while (true) {
+          if (node.children.Count() == 0) { Console.WriteLine("broke"); break; };
+          if (node.children.Count() == 1) { Console.WriteLine("rtrnd"); return node.children[0].data; }
+
+          string sym = node.data;
+
+          string a = node.children[0].data;
+          string b = node.children[1].data;
+
+          node.children.RemoveAt(0);
+          node.children.RemoveAt(0);
+          
+          tempdata = expr(node.data, a, b);
+          // node.children.Remove( new Node("NUM", a));
+          // node.children.Remove( new Node("NUM", b));
+                    
+          node.children.Insert(0, new Node("NUM", tempdata));
+
+          // node.children.Prepend( new Node("NUM", tempdata) );
+          // node.children.Append( new Node("NUM", tempdata) );
+        }
+
+        return tempdata;
+      }
+
+      public string expr(string sym, string a, string b) {
+        double a_, b_;
+        double.TryParse(a, out a_);
+        double.TryParse(b, out b_);
+
+        if (sym == "+") return (a_ + b_).ToString();
+        if (sym == "-") return (a_ - b_).ToString();
+        if (sym == "*") return (a_ * b_).ToString();
+        if (sym == "/") {
+          if (b_ != 0) return (a_ + b_).ToString();
+          else         return "";
+        }
+        return "";
+      }
+
+      public void printTREE(Node node, string level = "") {
+        Console.WriteLine(level+"Node("+node.type+", "+node.data+", "+node.pos+")");
+        foreach (Node branch in node.children) {
+          if (branch.type == "EXPR")
+            printTREE(branch, level + "->");
+          else
+            Console.WriteLine(level+">Node("+branch.type+", "+branch.data+")");
+        }
+      }
+    }
+
+// ( + 2 3 ( * 4 ( - 6 5 ) 7 ) 9 )    <-   Wird nicht richtig evaluiert
+// ( + 2 3 9 ( * 4 7 ( - 6 5 ) ) )    <-   Wird auch nicht richtig evaluiert.
+// ( + 2 3 9 ( * 4 7 ) )              <-   Ist OK
+
+    public void Prompt() {
+      string input;
+      Lexer  lex  = new Lexer();
+      Parser par  = new Parser();
+      Eval   eval = new Eval();
+
+      Console.WriteLine("Welcome to Krispy v0.0.0.0.0.0.0.0)");
+      while (true) {
+        Console.Write("Krispy> ");
+        input = Console.ReadLine();
+
+        if (input == "exit")            break;
+        else if ( input == "r")         lex.printTokens();
+        else if ( input == "p")         par.parse(lex);
+        else if ( input == "e")         eval.printTREE(par.ROOT);
+        // else if ( input == "c") {
+        //   par.parse(lex);
+        //   eval.printTREE(par.ROOT, "==");
+        // }
+        else {
+          lex.lex(input);
+          lex.printTokens();          
+          par.parse(lex);
+          Console.WriteLine();
+          eval.printTREE(par.ROOT);
+          Console.WriteLine();
+          Console.WriteLine(eval.eval(par.ROOT));
+        }
+      }
+    }
+
+    // runtime
+    public Krispy() {
+      Prompt();
+    }
+  }
+
+  public class Program {
+    public static void Main(string[] args) {
+      Krispy dick = new Krispy();
+    }
+  }
+}

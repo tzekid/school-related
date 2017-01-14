@@ -1,0 +1,181 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+// using System.Text.RegularExpressions;
+
+namespace ConsoleApplication {
+  public class Krispy {
+    public struct Token {
+      public string tag
+                  , data;
+
+      public Token(string tag, string data) {
+        this.tag = tag;
+        this.data = data;
+      }
+
+      public override string ToString() { 
+        return String.Format("=> Token({0, 6}, \"{1}\")", tag, data);
+      }
+    }
+
+    public abstract class Node {
+      
+    }
+
+    public class AST : Node {
+      public List<Node> nodes = new List<Node>();
+      public int num_children = 0;
+      public List<EXPR> children = new List<EXPR>();
+
+      public void beget(EXPR node) {
+        this.nodes.Add(node);
+        num_children++;
+        children.Add(node);
+      }
+
+      public override string ToString() {
+        string ret = "";
+        foreach (Node child in children)
+          ret += child;
+
+        return ret;
+      }
+    }
+
+    public class NUM  : Node {
+      public double number;
+
+      public NUM(Token num) {
+        this.number = Convert.ToDouble(num.data); 
+      }
+
+      public override string ToString() { return "Number("+number.ToString()+")"; }
+    }
+
+    public class SYM  : Node {
+      public string symbol = "";
+
+      public SYM(Token sym) {
+        this.symbol = sym.data;
+      }
+    }
+
+    public class EXPR : AST {
+      public string expr_type;
+      public override string ToString() {
+        string ret = "";
+        ret += string.Format( this.GetType().Name.ToString() + "(" +  expr_type + " [" );
+        
+        foreach (Node child in children)
+          ret += child.ToString() + ", ";
+          
+        ret += "])";
+
+        return ret;
+      }
+    }
+
+    public class Lexer {
+      public int pos = 0;
+      public List<Token> tokens = new List<Token>();
+      static List<string> symbols =
+        new List<string>( new string[] {"+", "-", "/", "*"} );  
+
+      static bool isSymbol(string isym) {
+        foreach (string sym in symbols)
+          if (sym == isym) return true;
+        return false;
+      }
+
+      public void lex(string source) {
+        List<string> words = source.Split().ToList();
+        double test_if_num;
+
+        foreach (string word in words) {
+          if (word == "" || word == " " || word == "\r")  continue;
+          if (isSymbol(word))                             tokens.Add( new Token("SYM", word) );
+          if (double.TryParse(word, out test_if_num))     tokens.Add( new Token("NUM", word) );
+          if (word == "(")                                tokens.Add( new Token("LPAR", "(") );
+          if (word == ")")                                tokens.Add( new Token("RPAR", ")") );
+          // Console.WriteLine(word);
+        }
+      }
+
+      public Token next() {
+        if (pos < tokens.Count() && tokens.Count() > 0) return tokens[pos++];
+        else                                            return new Token("null", "null");
+      }
+
+      public Lexer(string source = "") { this.lex(source); }
+    }
+
+    // Syntax & Semantic analyser
+    // Take Token[] -> Node[] AST
+    public class Parser {
+      public AST ast;
+
+      public void parse(Lexer lex) {
+        ast = new AST();
+        Token prevToken = new Token("null", "null");
+        Token nextToken = lex.next();
+        AST last_child = ast;
+
+        while (nextToken.tag != "null") {
+          if (nextToken.tag == "LPAR")
+               last_child.beget( new EXPR());
+          
+          if (nextToken.tag == "SYM") {
+             if (prevToken.tag != "LPAR")
+               last_child.beget( new EXPR() );
+              last_child.children[last_child.num_children-1].expr_type = nextToken.data;
+          }
+          
+          if (nextToken.tag == "NUM")
+            last_child.children[last_child.num_children-1].nodes.Add( new NUM(nextToken) );
+          
+          if (nextToken.tag == "RPAR") {
+            last_child.num_children -= 1;
+          }
+
+          prevToken = nextToken;
+          nextToken = lex.next();
+        }
+      }
+    }
+
+    // Take AST -> Result
+    public class Coder_Gen {
+
+    }
+
+    public void Prompt() {
+      string input = "";
+      Lexer  lex = new Lexer();
+      Parser par = new Parser();
+
+      Console.WriteLine("Welcome to Krispy v0.0.0.0.0.0.0.0)");
+      while (true) {
+        Console.Write("Krispy> ");
+        input = Console.ReadLine();
+
+        if (input == "exit")            break;
+        else if ( input == "next")      Console.WriteLine(lex.next());
+        else if ( input == "parse")     { lex.pos = 0; par.parse(lex); }
+        else if ( input == "pparse")    Console.WriteLine(par.ast);
+        else                            lex.lex(input);
+      }
+    }
+
+    // runtime
+    public Krispy() {
+      Prompt();
+    }
+  }
+
+  public class Program {
+    public static void Main(string[] args) {
+      Krispy dick = new Krispy();
+    }
+  }
+}

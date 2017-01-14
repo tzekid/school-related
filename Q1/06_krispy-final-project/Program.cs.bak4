@@ -1,0 +1,178 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+// using System.Text.RegularExpressions;
+
+namespace ConsoleApplication {
+  public unsafe class Krispy {
+    public enum tTags { SYM, NUM, STR, LPAREN, RPAREN, EXPR, NULL };
+    public enum nTags { AST, EXPR, NUM, NULL }
+    public static List<string> symbols = 
+      new List<string>( new string[] { "+", "-", "/", "*" } );
+
+    public struct Token {
+      public tTags tag;
+      public string data;
+
+      public Token(tTags tag, string str) {
+        this.tag = tag;
+        this.data = str;
+      }
+      
+      // enum.ToString("G") => returns typeName instead of data
+      public override string ToString() { 
+        return String.Format("=> Token({0, 6}, \"{1}\")", this.tag.ToString(), data);
+      }
+    }
+
+    public struct Node {
+      public nTags tag;      
+      public int pos;
+      public static int children_count;
+
+      public List<Token> elements;      
+      public List<Node> children;
+
+      public void addElement(Token element) { elements.Add(element); }
+      public void addChild(Node child)      { children.Add(child); children_count++; }
+
+      public Node(nTags tag, int pos = 0) {
+        this.tag = tag;
+        this.pos = pos;
+        elements = new List<Token>();
+        children = new List<Node>();
+      }
+    }
+
+    public class Lexer {
+      List<Token> tokens = new List<Token>();
+      static int pos = 0;
+
+      static  bool isSymbol(string word) {
+        foreach (string sym in symbols)
+          if (sym == word) return true;
+        
+        return false;
+      }
+
+      public int count() { return this.tokens.Count; }
+
+      public void lex(string str) {
+        pos = 0;
+        double num;
+
+        if (tokens.Count != 0) tokens.Clear();
+        List<string> words = str.Split().ToList();
+
+        foreach (string word in words) {
+          if (isSymbol(word))                       tokens.Add(new Token(tTags.SYM,    word));
+          else if (double.TryParse(word, out num))  tokens.Add(new Token(tTags.NUM,    word));
+          else if (word == "(")                     tokens.Add(new Token(tTags.LPAREN, word));
+          else if (word == ")")                     tokens.Add(new Token(tTags.RPAREN, word));
+        }
+      }
+
+      public Token next() {
+        while (pmos < tokens.Count) {
+          return tokens[pos++];
+        } return new Token(tTags.NULL, "");
+      }
+
+      public void printAll() {
+        foreach (Token token in tokens)
+          Console.WriteLine(token);
+      }
+    }
+
+    public class Parser {
+      Node root = new Node(nTags.NULL);
+
+      public void parse(Lexer lex) {
+        int pos = 0;
+        Token nextToken = lex.next();
+        Node prevNode;
+        Node currNode = root;  
+
+        while (nextToken.tag != tTags.NULL) {
+          // The first element should be an `(` or SYM
+          if (nextToken.tag != tTags.LPAREN ||
+              nextToken.tag != tTags.SYM && pos == 0)
+              // single number-case  
+              if (lex.count() == 1 && nextToken.tag == tTags.NUM) {
+                currNode = new Node(nTags.NUM);
+                currNode.addElement(nextToken);
+                return;
+              } else { return; }
+          
+          switch (nextToken.tag) {
+          case tTags.SYM:
+            if (root.tag == nTags.NULLm)
+              root = new Node(nTags.EXPR);
+            
+            currNode.addElement(nextToken);
+            break;
+
+          case tTags.NUM:
+            currNode.addElement(nextToken);
+            break;
+          
+          case tTags.LPAREN:
+            currNode.addChild( new Node(nTags.NULL, pos) );
+            prevNode = currNode;
+            currNode = currNode.children[0];
+            break;
+            
+            
+
+          default: break;
+          }
+
+        pos += 1;
+        } 
+      }
+    }
+
+/* EXAMPLES
+
+=> Token(   SYM, "+")                  
+=> Token(   NUM, "4")                      Expression('+', [ Number(4), Number(5) ])
+=> Token(   NUM, "5")                  
+
+
+=> Token(   SYM, "+")
+=> Token(   NUM, "1")                  
+=> Token(   NUM, "2")                      Expression('+', [ Number(1), Number(2), Number(3),
+=> Token(   NUM, "3")                          Expression('+', [ Number(4), Number(5) ])
+=> Token(LPAREN, "(")                      ])
+=> Token(   SYM, "+")                      
+=> Token(   NUM, "4")                      
+=> Token(   NUM, "5")                  
+=> Token(RPAREN, ")")
+
+*/
+
+    public Krispy() {
+      string input; 
+      Lexer lex = new Lexer();
+      bool debug = true;
+
+      Console.WriteLine("Welcome to Krispy v.0.0.0.0.0.0.0.0");
+      while(true) {
+        Console.Write("Krispy> ");
+        input = Console.ReadLine();
+
+        if (input == "exit")                     break;
+        else if (debug && input == "next")       Console.WriteLine(lex.next());
+        else if (debug && input == "print")      lex.printAll();
+        else if (debug)                          lex.lex(input); 
+
+      }
+    }
+  }
+
+  public class Program {
+    public static void Main(string[] args) { 
+      Krispy dick = new Krispy();
+    }
+  }
+}
