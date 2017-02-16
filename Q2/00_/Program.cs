@@ -80,3 +80,17 @@ namespace ConsoleApplication {
         }
     }
 }
+
+/* Output
+
+True
+::1
+inet 192.168.1.45  netmask 255.255.255.0  broadcast 192.168.1.255
+
+idoh = 192 168 1 45
+nmsk = 255 255 255 0
+bcst = 192 168 1 255
+
+Netwerk: 192 168 1 0
+
+ */
