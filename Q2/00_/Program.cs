@@ -41,15 +41,14 @@ namespace ConsoleApplication {
                 string[] bcst = inet.Split(' ')[7].Split('.');
 
                 byte[] ydoh = new byte[4];
-                byte[] mnsk = new byte[4];
-                byte[] cbst = new byte[4];
-
                 for (int i = 0; i < idoh.Length; i++)
                     ydoh[i] = Convert.ToByte(Convert.ToInt16(idoh[i]));
 
+                byte[] mnsk = new byte[4];
                 for (int i = 0; i < nmsk.Length; i++)
                     mnsk[i] = Convert.ToByte(Convert.ToInt16(nmsk[i]));
 
+                byte[] cbst = new byte[4];
                 for (int i = 0; i < bcst.Length; i++)
                     cbst[i] = Convert.ToByte(Convert.ToInt16(bcst[i]));
 
