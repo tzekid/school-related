@@ -2,12 +2,9 @@
 using System.Text;
 using System.Collections.Generic;
 
-namespace ConsoleApplication
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
+namespace ConsoleApplication {
+    public class Program {
+        public static void Main(string[] args) {
             Dictionary<string, int> dick =
                 new Dictionary<string, int>() {{"STX", 2}, {"ETX", 3}, {"DLE", 20}, {"SYN", 22}, {"EOT", 4} };
             
@@ -23,6 +20,7 @@ namespace ConsoleApplication
             string ascii = "";
 
             foreach (var x in hoe) {
+                if (x == " ") continue;
                 if (dick.ContainsKey(x)) {
                     Console.WriteLine("Converting {0} with {1}",
                                                     x, Convert.ToString(dick[x], 2).PadLeft(7, '0'));
