@@ -21,3 +21,12 @@ namespace ConsoleApplication
         }
     }
 }
+
+
+/* output e.g.
+
+Input something, dawg: Snappy crap
+Your input was: 0010100110101101110010110000101011100000101110000010111100101010000001011000110101110010010110000
+10101110000011
+
+ */

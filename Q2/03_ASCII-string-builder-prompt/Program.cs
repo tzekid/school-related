@@ -103,6 +103,12 @@ loahp:      while(!false) {
     }
 }
 
-// <SYN><SYN><STX><Hier kommt Nachricht1><ETX><STX><Hier kommt Nachricht 2><ETX>...<EOT>
-// <DLE><DLE> ... <DLE><DLE>
-// <DLE><stuff><DLE><DLE><stuff>
+/* output e.g.
+
+Do you want to use Transparency method one or two ? (1/2) 2
+Enter something here dawg: fun times
+Enter something here dawg: <SYN>
+Enter something here dawg:
+<DLE><STX><fun times><DLE><ETX><DLE><SYN><DLE><EOT>
+
+*/

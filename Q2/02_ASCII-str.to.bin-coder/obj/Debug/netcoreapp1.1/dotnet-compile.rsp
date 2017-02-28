@@ -1,5 +1,5 @@
---temp-output:/home/tzekid/Code/git/school-related/Q2/02_/obj/Debug/netcoreapp1.1/
---out:/home/tzekid/Code/git/school-related/Q2/02_/bin/Debug/netcoreapp1.1/02_.dll
+--temp-output:/home/tzekid/Code/git/school-related/Q2/02_ASCII-str.to.bin-coder/obj/Debug/netcoreapp1.1/
+--out:/home/tzekid/Code/git/school-related/Q2/02_ASCII-str.to.bin-coder/bin/Debug/netcoreapp1.1/02_ASCII-str.to.bin-coder.dll
 --define:DEBUG
 --define:TRACE
 --define:NETCOREAPP1_1
@@ -9,7 +9,7 @@
 --optimize:False
 --debug-type:portable
 --emit-entry-point:True
---output-name:02_
+--output-name:02_ASCII-str.to.bin-coder
 --file-version:1.0.0.0
 --version:1.0.0.0
 --informational-version:1.0.0
@@ -87,4 +87,4 @@
 --reference:/home/tzekid/.nuget/packages/System.Threading.Timer/4.3.0/ref/netstandard1.2/System.Threading.Timer.dll
 --reference:/home/tzekid/.nuget/packages/System.Xml.ReaderWriter/4.3.0/ref/netstandard1.3/System.Xml.ReaderWriter.dll
 --reference:/home/tzekid/.nuget/packages/System.Xml.XDocument/4.3.0/ref/netstandard1.3/System.Xml.XDocument.dll
-/home/tzekid/Code/git/school-related/Q2/02_/Program.cs
+/home/tzekid/Code/git/school-related/Q2/02_ASCII-str.to.bin-coder/Program.cs
