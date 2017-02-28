@@ -11,7 +11,7 @@ namespace ConsoleApplication {
             new List<string>() { "STX", "ETX", "SYN" };
 
         // (even/odd affirmative acknowledgement)
-        // 1: DLE STX before every ETB, ETX or SYN and DLE ETX after
+        // 1: DLE before every ETB, ETX or SYN
         // 2: DLE DLE at the beg. and end of package
         static public int getTrsp() {
             while(!false) {
@@ -65,7 +65,8 @@ loahp:      while(!false) {
                 Console.Write("Enter something here dawg: ");
                 intake = Console.ReadLine().Trim();
 
-                if (intake == "" || intake == "continue" || intake == "break" || intake == "exit" || intake == "done") break;
+                if (intake == "" || intake == "continue"  || intake == "done")  break;
+                if (intake == "break" || intake == "exit")                      Environment.Exit(1);
 
                      if (syntaxCheck(intake) == -1)  Console.WriteLine("Sytax error");
                 else if (syntaxCheck(intake) ==  1)
@@ -83,10 +84,9 @@ loahp:      while(!false) {
                         }
 
                         // Version 2
-                        if (transp != 1)
-                        {
-                            newString += "<DLE><" + x + ">";
-                        }
+                        newString += transp == 1
+                        ? "<" + x + ">"
+                        : "<DLE><" + x + ">";
                     }
                     
                     ASCII_string += newString;
@@ -155,3 +155,36 @@ loahp:      while(!false) {
         }
     }
 }
+
+
+/* output e.g.
+
+Do you want to use Transparency method one or two ? (1/2) 1                                                           
+Enter something here dawg: <SYN><SYN><STX><STX>                                                                       
+Enter something here dawg: Hahahaha                                                                                   
+Enter something here dawg: <ETX><ETX><SYN>                                                                            
+Enter something here dawg:                                                                                            
+Converting the message: <DLE><DLE><SYN><SYN><STX><STX><STX><Hahahaha><ETX><ETX><ETX><SYN><DLE><DLE><EOT>              
+                                                                                                                      
+Converting DLE with 0010100                                                                                           
+Converting DLE with 0010100                                                                                           
+Converting SYN with 0010110                                                                                           
+Converting SYN with 0010110                                                                                           
+Converting STX with 0000010                                                                                           
+Converting STX with 0000010                                                                                           
+Converting STX with 0000010                                                                                           
+Converting 'Hahahaha' to 01001000010110000101011010000101100001010110100001011000010101101000010110000101             
+Converting ETX with 0000011                                                                                           
+Converting ETX with 0000011                                                                                           
+Converting ETX with 0000011                                                                                           
+Converting SYN with 0010110                                                                                           
+Converting DLE with 0010100                                                                                           
+Converting DLE with 0010100                                                                                           
+Converting EOT with 0000100                                                                                           
+                                                                                                                      
+The original was: <DLE><DLE><SYN><SYN><STX><STX><STX><Hahahaha><ETX><ETX><ETX><SYN><DLE><DLE><EOT>                    
+The output is:                                                                                                        
+0001010001000101000100010110010001011001000000100100000010010000001001010010000101100001010110100001011000010101101000
+010110000101011010000101100001010000001101000000110100000011010001011001000101000100010100010000010001     
+
+*/
