@@ -7,8 +7,8 @@ namespace ConsoleApplication {
     public class Program {
 
 
-        static public List<string> codes =
-            new List<string>() { "STX", "ETX", "SYN" };
+        // static public List<string> codes =
+            // new List<string>() { "STX", "ETX", "SYN" };
 
         // (even/odd affirmative acknowledgement)
         // 1: DLE before every ETB, ETX or SYN
@@ -77,23 +77,23 @@ loahp:      while(!false) {
                     string newString = "";
                     
                     foreach (var x in dox) {
-                        if (!codes.Contains(x))
-                        {
-                            Console.WriteLine("You cannot enter {0}", x);
-                            goto loahp; // there is not `break outer` in C# ... this fucking language, man 
-                        }
+                        // if (!codes.Contains(x))
+                        // {
+                            // Console.WriteLine("You cannot enter {0}", x);
+                            // goto loahp; // there is not `break outer` in C# ... this fucking language, man 
+                        // }
 
                         // Version 2
-                        newString += transp == 1
-                        ? "<" + x + ">"
-                        : "<DLE><" + x + ">";
+                        // newString += transp == 1
+                        // ? "<" + x + ">"
+                        // : "<DLE><" + x + ">";
                     }
                     
                     ASCII_string += newString;
 
-                    // ASCII_string += transp == 1
-                    // ? intake
-                    // : "<DLE><STX>" + intake + "<DLE><ETX>";
+                    ASCII_string += transp == 1
+                    ? intake
+                    : "<DLE><STX>" + intake + "<DLE><ETX>";
                 }
 
                 else
