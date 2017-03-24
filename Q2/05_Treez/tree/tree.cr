@@ -95,7 +95,7 @@ module Naive
         queue << node
 
         until queue.empty?
-          p node.value
+          p node.value # Do stuff
           unless node.leftChild.nil?
             queue << node.leftChild.as(Node)
           end
@@ -108,6 +108,24 @@ module Naive
           unless queue.empty?; node = queue[0]; end
         end
       end
+    end
+
+    def nodeBalance(node : Node(A)? = @root, balance : Number = 0)
+      unless node.nil?
+        unless node.leftChild.nil?
+          balance -= 1
+          balance = nodeBalance node.leftChild, balance
+        end
+        
+        unless node.rightChild.nil?
+          balance += 1
+          balance = nodeBalance node.rightChild, balance
+        end
+
+        balance
+      end
+
+      balance
     end
 
   end # class

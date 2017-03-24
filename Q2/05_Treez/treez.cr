@@ -16,4 +16,6 @@ module Naive
   # dick.postOrder()
 
   dick.breadthFirst()
+
+  p dick.nodeBalance
 end
