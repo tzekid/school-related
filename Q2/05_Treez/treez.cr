@@ -17,9 +17,7 @@ module Naive
   # p "postOrder"
   # dick.postOrder()
 
-  dick.preOrder do |x|
-    p x.value
-  end
+  dick.breadthFirst{ |x| p x.value }
 
   # p dick.nodeBalance 
 end
