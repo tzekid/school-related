@@ -5,7 +5,9 @@ module Naive
   dick.add 2
   dick.add 3
   dick.add 1
+  dick.add 6
   dick.add 5
+  dick.add 7
 
   # p "preOrder"
   # dick.preOrder
@@ -15,7 +17,9 @@ module Naive
   # p "postOrder"
   # dick.postOrder()
 
-  dick.breadthFirst()
+  dick.preOrder do |x|
+    p x.value
+  end
 
-  p dick.nodeBalance
+  # p dick.nodeBalance 
 end

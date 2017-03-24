@@ -89,13 +89,13 @@ module Naive
       end
     end
 
-    def breadthFirst(node : Node(A)? = @root, level : Number = 0)
+    def breadthFirst(node : Node(A)? = @root)
       unless node.nil?
         queue = [] of Node(A)
         queue << node
 
         until queue.empty?
-          p node.value # Do stuff
+          yield node
           unless node.leftChild.nil?
             queue << node.leftChild.as(Node)
           end
