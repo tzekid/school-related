@@ -27,3 +27,25 @@ module Naive
 
   # p dick.nodeBalance 
 end
+
+
+# Sample output
+###
+# "Nodes printed level-wise"
+# 4
+# 2
+# 5
+# 1
+# 3
+# 7
+# 6
+
+# "Balance of each individual node"
+# 0
+# 0
+# 0
+# 0
+# 0
+# -1
+# 0
+###
