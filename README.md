@@ -2,7 +2,7 @@
 A backup of my school related code
 
 # Structure
-School
+School  
 ├── Q1  
 │   ├── [00_oop_bank](https://github.com/tzekid/school-related/blob/master/Q1/00_oop_bank)  
 │   ├── [01_oop_bank](https://github.com/tzekid/school-related/blob/master/Q1/01_oop_bank)  
