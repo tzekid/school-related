@@ -17,35 +17,15 @@ module Naive
   # p "postOrder"
   # dick.postOrder()
 
-  p "Nodes printed level-wise"
-  dick.breadthFirst{ |x| p x.value }
+  # p "Nodes printed level-wise"
+  # dick.breadthFirst{ |x| p x.value }
 
   puts # Newline
 
-  p "Balance of each individual node"
-  dick.breadthFirst{ |x| p dick.nodeBalance x }
+  # p "Balance of each individual node"
+  # dick.breadthFirst{ |x| p dick.nodeBalance x }
 
   # p dick.nodeBalance 
+
+  p dick.root.as(Node).value.as(Int32)
 end
-
-
-# Sample output
-###
-# "Nodes printed level-wise"
-# 4
-# 2
-# 5
-# 1
-# 3
-# 7
-# 6
-
-# "Balance of each individual node"
-# 0
-# 0
-# 0
-# 0
-# 0
-# -1
-# 0
-###
