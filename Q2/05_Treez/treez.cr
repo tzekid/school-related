@@ -9,23 +9,13 @@ module Naive
   dick.add 7
   dick.add 6
 
-  # p "preOrder"
-  # dick.preOrder
-
-  # p "inOrder"
-  # dick.inOrder()
-  # p "postOrder"
-  # dick.postOrder()
-
-  # p "Nodes printed level-wise"
-  # dick.breadthFirst{ |x| p x.value }
+  dick.preOrder.each{ |x| unless x.nil?; p x.value; end }
 
   puts # Newline
 
-  # p "Balance of each individual node"
-  # dick.breadthFirst{ |x| p dick.nodeBalance x }
+  dick.inOrder.each{ |x| unless x.nil?; p x.value; end }
 
-  # p dick.nodeBalance 
+  puts # Newline
 
-  p dick.root.as(Node).value.as(Int32)
+  dick.postOrder.each{ |x| unless x.nil?; p x.value; end }
 end

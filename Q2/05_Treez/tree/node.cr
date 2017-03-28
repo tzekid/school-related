@@ -7,5 +7,6 @@ module Naive
 
     def initialize(@value : T)
     end
+
   end
 end

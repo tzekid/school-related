@@ -10,46 +10,41 @@ namespace DNZ
 {
     class Program
     {
-        int convertToInt(string input)
+        static IPAddress subnetmaszk(int suffix)
         {
-            IPAddress ipAddrz;
-            List<int> calculate;
-            if (IPAddress.TryParse(input, out ipAddrz))
-            {
-                foreach (var x in input.Split('.'))
-                    Console.WriteLine(x);
-            } else return -1;
-            return -1;
+            int a = 0;
+            // for (int i = 0; i < suffix; i++)
+                // a += Convert.ToUInt32(Math.Pow(2, 31 - i));
+            
+            byte[] subnetmask = BitConverter.GetBytes(a);
+            Array.Reverse(subnetmask);
+            return new IPAddress(subnetmask);
+
         }
 
         static void Main(string[] args)
         {
-            string input;
-            IPAddress ipadress;
-            while (!false)
+            IPAddress ip;
+            string ipstring;
+            Int16 subnetmask;
+
+
+            while(!false)
             {
-                try
-                {
-                    input = Console.ReadLine().Trim();
+                Console.WriteLine("Loop");
+                ipstring = Console.ReadLine().Trim();
+                if( ipstring == "exit" || ipstring == "break" ) break;
 
-                    if(input == "exit" || input == "break") break;
+                if (IPAddress.TryParse(ipstring, out ip))
+                    ip = IPAddress.Parse(ipstring);
+                else continue;
 
-                    if (IPAddress.TryParse(input, out ipadress))
-                        ipadress = IPAddress.Parse(input);
-                    else
-                    {
-                        Console.WriteLine("Shit's wrong ...");
-                        continue;
-                    }
+                subnetmask = Convert.ToInt16(Console.ReadLine().Trim());
 
-                    Console.WriteLine("plz enterz an subnetmaskz");
-
-                    byte[] bytez = ipadress.GetAddressBytes();
-                    Array.Reverse(bytez);
-                    UInt32 intAddrz = BitConverter.ToUInt32(bytez, 0);
-
-
-                } catch { Console.WriteLine("Something failed"); break; }
+                //> IPAddr -> int
+                byte[] bytes = ip.GetAddressBytes();
+                Array.Reverse(bytes);
+                uint intAddress = BitConverter.ToUInt32(bytes, 0);
             }
         }
     }

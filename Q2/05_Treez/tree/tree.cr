@@ -52,41 +52,58 @@ module Naive
     def del
     end
 
-    def preOrder(node : Node(A)? = @root)
+    # def preOrder(node : Node(A)? = @root)
+    #   unless node.nil?
+    #     p node.value # Do stuff
+    #     unless node.leftChild.nil?
+    #       preOrder(node.leftChild)
+    #     end
+
+    #     unless node.rightChild.nil?
+    #       preOrder(node.rightChild)
+    #     end
+    #   end
+    # end
+
+    def preOrder(node : Node(A)? = @root, nodez = [] of Node(A))
       unless node.nil?
-        p node.value # Do stuff
+        nodez << node
+
         unless node.leftChild.nil?
-          preOrder(node.leftChild)
+          preOrder(node.leftChild, nodez)
         end
 
         unless node.rightChild.nil?
-          preOrder(node.rightChild)
+          preOrder(node.rightChild, nodez)
         end
       end
+      nodez
     end
 
-    def inOrder(node : Node(A)? = @root)
+    def inOrder(node : Node(A)? = @root, nodez = [] of Node(A))
       unless node.nil?
         unless node.leftChild.nil?
-          inOrder(node.leftChild)
+          inOrder(node.leftChild, nodez)
         end
-        p node.value # Do stuff
+        nodez << node
         unless node.rightChild.nil?
-          inOrder(node.rightChild)
+          inOrder(node.rightChild, nodez)
         end
       end
+      nodez
     end
 
-    def postOrder(node : Node(A)? = @root)
+    def postOrder(node : Node(A)? = @root, nodez = [] of Node(A))
       unless node.nil?
         unless node.leftChild.nil?
-          postOrder(node.leftChild)
+          postOrder(node.leftChild, nodez)
         end
         unless node.rightChild.nil?
-          postOrder(node.rightChild)
+          postOrder(node.rightChild, nodez)
         end
-        p node.value # Do stuff
+        nodez << node
       end
+      nodez
     end
 
     def breadthFirst(node : Node(A)? = @root)
