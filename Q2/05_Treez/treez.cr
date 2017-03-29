@@ -9,13 +9,33 @@ module Naive
   dick.add 7
   dick.add 6
 
-  dick.preOrder.each{ |x| unless x.nil?; p x.value; end }
+  # puts # Newline
+  # dick.preOrder.each do |butt|
+  #   unless butt.nil?
+  #     p butt.value.to_s + " -> " + dick.nodeBalance(butt).to_s
+  #   end
+  # end
 
-  puts # Newline
+  # puts # Newline
+  # dick.inOrder.each do |butt|
+  #   unless butt.nil?
+  #     p butt.value.to_s + " -> " + dick.nodeBalance(butt).to_s
+  #   end
+  # end
 
-  dick.inOrder.each{ |x| unless x.nil?; p x.value; end }
+  # puts # Newline
+  # dick.postOrder.each do |butt|
+  #   unless butt.nil?
+  #     p butt.value.to_s + " -> " + dick.nodeBalance(butt).to_s
+  #   end
+  # end
 
-  puts # Newline
+  # puts # Newline
+  # dick.breadthFirst.each do |butt|
+  #   unless butt.nil?
+  #     p butt.value.to_s + " -> " + dick.nodeBalance(butt).to_s
+  #   end
+  # end
 
-  dick.postOrder.each{ |x| unless x.nil?; p x.value; end }
 end
+

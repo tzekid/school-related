@@ -12,6 +12,7 @@ module Naive
       @root = Node(A).new value
     end
 
+
     def add(value)
       if @root.nil?
         @root = Node(A).new value
@@ -21,49 +22,33 @@ module Naive
       tempNode = @root
 
       loop do
-      # p "Start loop" # Debug
       unless tempNode.nil? || value.nil? 
         if value.as(A) < tempNode.value.as(A)
           if tempNode.leftChild.nil?
-            # p "Add #{value} as leftChild of #{tempNode.value}" # Debug
             tempNode.leftChild = Node(A).new value
             return
           else
-            # p "tempNode to leftChild" # Debug
             tempNode = tempNode.leftChild
           end
         else
           if tempNode.rightChild.nil?
-            # p "Add #{value} as rightChild of #{tempNode.value}" # Debug
             tempNode.rightChild = Node(A).new value
             return
           else
-            # p "tempNode to rightChild" # Debug
             tempNode = tempNode.rightChild
           end
         end
       else
-        # p "Breakz" # Debug
         break
       end # unless else
       end # loop
     end # add
 
+
+# TODO
     def del
     end
 
-    # def preOrder(node : Node(A)? = @root)
-    #   unless node.nil?
-    #     p node.value # Do stuff
-    #     unless node.leftChild.nil?
-    #       preOrder(node.leftChild)
-    #     end
-
-    #     unless node.rightChild.nil?
-    #       preOrder(node.rightChild)
-    #     end
-    #   end
-    # end
 
     def preOrder(node : Node(A)? = @root, nodez = [] of Node(A))
       unless node.nil?
@@ -77,8 +62,10 @@ module Naive
           preOrder(node.rightChild, nodez)
         end
       end
+
       nodez
     end
+
 
     def inOrder(node : Node(A)? = @root, nodez = [] of Node(A))
       unless node.nil?
@@ -93,6 +80,7 @@ module Naive
       nodez
     end
 
+
     def postOrder(node : Node(A)? = @root, nodez = [] of Node(A))
       unless node.nil?
         unless node.leftChild.nil?
@@ -103,16 +91,19 @@ module Naive
         end
         nodez << node
       end
+
       nodez
     end
 
-    def breadthFirst(node : Node(A)? = @root)
+
+    def breadthFirst(node : Node(A)? = @root, nodez = [] of Node(A))
       unless node.nil?
         queue = [] of Node(A)
         queue << node
 
         until queue.empty?
-          yield node
+          # yield node
+          nodez << node
           unless node.leftChild.nil?
             queue << node.leftChild.as(Node)
           end
@@ -125,7 +116,10 @@ module Naive
           unless queue.empty?; node = queue[0]; end
         end
       end
+      
+      nodez
     end
+
 
     def nodeBalance(node : Node(A)? = @root, balance : Number = 0)
       unless node.nil?
@@ -138,12 +132,16 @@ module Naive
           balance += 1
           balance = nodeBalance node.rightChild, balance
         end
-
-        balance
       end
 
       balance
     end
-
   end # class
+
+
+  class AVL_Tree(A) < Tree(A)
+    def check_balance(tree = self)
+
+    end
+  end
 end # module
