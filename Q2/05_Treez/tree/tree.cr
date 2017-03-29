@@ -24,18 +24,18 @@ module Naive
       loop do
       unless tempNode.nil? || value.nil? 
         if value.as(A) < tempNode.value.as(A)
-          if tempNode.leftChild.nil?
-            tempNode.leftChild = Node(A).new value
+          if tempNode.left_child.nil?
+            tempNode.left_child = Node(A).new value
             return
           else
-            tempNode = tempNode.leftChild
+            tempNode = tempNode.left_child
           end
         else
-          if tempNode.rightChild.nil?
-            tempNode.rightChild = Node(A).new value
+          if tempNode.right_child.nil?
+            tempNode.right_child = Node(A).new value
             return
           else
-            tempNode = tempNode.rightChild
+            tempNode = tempNode.right_child
           end
         end
       else
@@ -44,59 +44,120 @@ module Naive
       end # loop
     end # add
 
+    ### TODO Delete
+    def del(value : A)
+      del find_node value
+    end
 
-# TODO
-    def del
+    # TODO: IT EZ NOT DONE
+    def del(node : Node(A))
+      parent = get_parent node
+      node_is_leaf = leaf? node
+      
+      # This part only takes place if the `if` statement is true
+      left_side ? parent.left_child  = nil
+                : parent.right_child = nil if node_is_leaf
+
+      unless node_is_leaf
+        left_side = parent.left_child == node ? true : false
+        
+        parent.left_child = node.right_child unless node.right_child.nil? if left_side
+        parent.right_child = node.left_child unless node.left_child.nil? unless left_side
+
+
+      end # unless
+    end # del
+
+
+    def children_of(node : Node(A))
+      children = [] of Node
+      unless node.left_child.nil?
+        children << node.left_child
+      end
+
+      unless node.right_child.nil?
+        children << node.right_child
+      end
+
+      children
     end
 
 
-    def preOrder(node : Node(A)? = @root, nodez = [] of Node(A))
+    def leaf?(node : Node(A))
+      children(node).size == 0
+    end
+
+
+    def get_parent(value : A)
+      get_parent find_node value
+    end
+
+    def get_parent(node : Node(A))
+      return nil if node == @root
+
+      if node.left_child.nil? && node.right_child.nil?
+        in_order.each do |parent|
+          if parent.left_child == node && parent.right_child == node
+            parent
+          end # if
+        end # do
+      end # if
+    end # get_parent
+
+    def find_node(value = A)
+      in_order.each do |x|
+        if x.value == value
+          x.value
+        end
+      end
+    end
+
+    def pre_order(node : Node(A)? = @root, nodez = [] of Node(A))
       unless node.nil?
         nodez << node
 
-        unless node.leftChild.nil?
-          preOrder(node.leftChild, nodez)
+        unless node.left_child.nil?
+          pre_order(node.left_child, nodez)
         end
 
-        unless node.rightChild.nil?
-          preOrder(node.rightChild, nodez)
+        unless node.right_child.nil?
+          pre_order(node.right_child, nodez)
         end
+      end
+
+      nodez
+    end 
+
+    def in_order(node : Node(A)? = @root, nodez = [] of Node(A))
+      unless node.nil?
+        unless node.left_child.nil?
+          in_order(node.left_child, nodez)
+        end
+        nodez << node
+        unless node.right_child.nil?
+          in_order(node.right_child, nodez)
+        end
+      end
+      nodez
+    end
+
+
+    def post_order(node : Node(A)? = @root, nodez = [] of Node(A))
+      unless node.nil?
+        unless node.left_child.nil?
+          post_order(node.left_child, nodez)
+        end
+        unless node.right_child.nil?
+          post_order(node.right_child, nodez)
+        end
+        nodez << node
       end
 
       nodez
     end
 
 
-    def inOrder(node : Node(A)? = @root, nodez = [] of Node(A))
-      unless node.nil?
-        unless node.leftChild.nil?
-          inOrder(node.leftChild, nodez)
-        end
-        nodez << node
-        unless node.rightChild.nil?
-          inOrder(node.rightChild, nodez)
-        end
-      end
-      nodez
-    end
-
-
-    def postOrder(node : Node(A)? = @root, nodez = [] of Node(A))
-      unless node.nil?
-        unless node.leftChild.nil?
-          postOrder(node.leftChild, nodez)
-        end
-        unless node.rightChild.nil?
-          postOrder(node.rightChild, nodez)
-        end
-        nodez << node
-      end
-
-      nodez
-    end
-
-
-    def breadthFirst(node : Node(A)? = @root, nodez = [] of Node(A))
+    def breadth_first(node : Node(A)? = @root, nodez = [] of Node(A))
       unless node.nil?
         queue = [] of Node(A)
         queue << node
@@ -104,43 +165,45 @@ module Naive
         until queue.empty?
           # yield node
           nodez << node
-          unless node.leftChild.nil?
-            queue << node.leftChild.as(Node)
+          unless node.left_child.nil?
+            queue << node.left_child.as(Node)
           end
 
-          unless node.rightChild.nil?
-            queue << node.rightChild.as(Node)
+          unless node.right_child.nil?
+            queue << node.right_child.as(Node)
           end
 
           queue.shift
-          unless queue.empty?; node = queue[0]; end
+          node = queue[0] unless queue.empty?
         end
       end
       
       nodez
     end
+  end # class
 
 
-    def nodeBalance(node : Node(A)? = @root, balance : Number = 0)
+  class AVL_Tree(A) < Tree(A)
+
+    def node_balance(node : Node(A)? = @root, balance : Number = 0)
       unless node.nil?
-        unless node.leftChild.nil?
+        unless node.left_child.nil?
           balance -= 1
-          balance = nodeBalance node.leftChild, balance
+          balance = node_balance node.left_child, balance
         end
         
-        unless node.rightChild.nil?
+        unless node.right_child.nil?
           balance += 1
-          balance = nodeBalance node.rightChild, balance
+          balance = node_balance node.right_child, balance
         end
       end
 
       balance
     end
-  end # class
 
 
-  class AVL_Tree(A) < Tree(A)
-    def check_balance(tree = self)
+    # TODO
+    def refresh_node_balance
 
     end
   end

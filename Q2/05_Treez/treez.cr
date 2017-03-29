@@ -9,31 +9,31 @@ module Naive
   dick.add 7
   dick.add 6
 
+  puts # Newline
+  dick.pre_order.each do |butt|
+    unless butt.nil?
+      p butt.value.to_s + " -> " + dick.node_balance(butt).to_s
+    end
+  end
+
   # puts # Newline
-  # dick.preOrder.each do |butt|
+  # dick.in_order.each do |butt|
   #   unless butt.nil?
-  #     p butt.value.to_s + " -> " + dick.nodeBalance(butt).to_s
+  #     p butt.value.to_s + " -> " + dick.node_balance(butt).to_s
   #   end
   # end
 
   # puts # Newline
-  # dick.inOrder.each do |butt|
+  # dick.post_order.each do |butt|
   #   unless butt.nil?
-  #     p butt.value.to_s + " -> " + dick.nodeBalance(butt).to_s
+  #     p butt.value.to_s + " -> " + dick.node_balance(butt).to_s
   #   end
   # end
 
   # puts # Newline
-  # dick.postOrder.each do |butt|
+  # dick.breadth_first.each do |butt|
   #   unless butt.nil?
-  #     p butt.value.to_s + " -> " + dick.nodeBalance(butt).to_s
-  #   end
-  # end
-
-  # puts # Newline
-  # dick.breadthFirst.each do |butt|
-  #   unless butt.nil?
-  #     p butt.value.to_s + " -> " + dick.nodeBalance(butt).to_s
+  #     p butt.value.to_s + " -> " + dick.node_balance(butt).to_s
   #   end
   # end
 

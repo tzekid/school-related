@@ -12,7 +12,7 @@ You only need to [install crystal](https://crystal-lang.org/docs/installation/) 
 
 ## (Own) Roadmap
 - [ ] UI  
-- [ ] delet / remove  
+- [ ] delete / remove node  
 - [ ] document Code  
 - [ ] Left Rotation  
 - [ ] Right Rotation  
