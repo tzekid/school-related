@@ -6,6 +6,10 @@
 ## Installation
 You only need to [install crystal](https://crystal-lang.org/docs/installation/) (for now)
 
+## Usage
+
+``` $ crystal ./treez.cr ```
+
 ## (Own) Roadmap
 - [ ] UI  
 - [ ] delet / remove  
