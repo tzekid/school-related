@@ -18,4 +18,4 @@ School
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [03_ASCII-string-builder-prompt](https://github.com/tzekid/school-related/tree/master/Q2/03_ASCII-string-builder-prompt)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [04_ASCII-prompt+bin_coder](https://github.com/tzekid/school-related/tree/master/Q2/04_ASCII-prompt+bin_coder)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [05_Treez](https://github.com/tzekid/school-related/tree/master/Q2/05_Treez)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── [06_](https://github.com/tzekid/school-related/tree/master/Q2/06_)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── [06_Subnetz](https://github.com/tzekid/school-related/tree/master/Q2/06_Subnetz)  
