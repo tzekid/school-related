@@ -1,4 +1,4 @@
-# Treez
+# Subnetz
 ## School Task
 - [x] Input -> Valid IP
 - [x] Generate a valid subnetmask based on the inputted mask suffix
