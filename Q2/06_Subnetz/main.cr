@@ -25,7 +25,6 @@ class String
 end
 
 
-
 struct UInt8
   def to_bytes
     bytes = Bytes.new 4
@@ -117,6 +116,7 @@ struct Slice(T)
   end
 end
 
+
 struct UInt64
   def first_last_bait
     i = 31
@@ -168,6 +168,7 @@ def generate_subnets(network : Bytes, sbnmsk : Bytes, n : UInt32)
 
   subnetz
 end
+
 
 def get_input(prompt : String, *, newline = false)
   puts  prompt if     newline
