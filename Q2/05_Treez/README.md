@@ -8,9 +8,9 @@ You only need to [install crystal](https://crystal-lang.org/docs/installation/) 
 
 ## Usage
 
-``` $ crystal ./treez.cr ```
+``` $ crystal ./treez.cr ```  
 
-## (Own) Roadmap
+## (Own) Roadmap  
 - [ ] UI  
 - [ ] delete / remove node  
 - [ ] document Code  

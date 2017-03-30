@@ -12,7 +12,8 @@ module Naive
   puts # Newline
   dick.pre_order.each do |butt|
     unless butt.nil?
-      p butt.value.to_s + " -> " + dick.node_balance(butt).to_s
+      # p butt.value.to_s + " -> " + dick.node_balance(butt).to_s
+      p butt.value
     end
   end
 

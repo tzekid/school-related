@@ -3,7 +3,6 @@ module Naive
     getter value : T?
     property left_child : Node(T)?
     property right_child : Node(T)?
-    property balance : Int32?
 
     def initialize(@value : T)
     end
@@ -11,8 +10,8 @@ module Naive
   end
 
   class B_Node(T) < Node(T)
-    
     property balance : Int32?
+
     def initialize(@value : T, @balance : Int32)
     end
   end

@@ -44,12 +44,13 @@ module Naive
       end # loop
     end # add
 
-    ### TODO Delete
+
     def del(value : A)
       del find_node value
     end
 
-    # TODO: IT EZ NOT DONE
+    # TODO: Delete
+
     def del(node : Node(A))
       parent = get_parent node
       node_is_leaf = leaf? node
@@ -63,8 +64,6 @@ module Naive
         
         parent.left_child = node.right_child unless node.right_child.nil? if left_side
         parent.right_child = node.left_child unless node.left_child.nil? unless left_side
-
-
       end # unless
     end # del
 
@@ -104,13 +103,14 @@ module Naive
       end # if
     end # get_parent
 
+
     def find_node(value = A)
       in_order.each do |x|
-        if x.value == value
-          x.value
-        end
+        return x.value if x.value == value
       end
     end
+
+### TRAVERSAL
 
     def pre_order(node : Node(A)? = @root, nodez = [] of Node(A))
       unless node.nil?
@@ -127,6 +127,7 @@ module Naive
 
       nodez
     end 
+
 
     def in_order(node : Node(A)? = @root, nodez = [] of Node(A))
       unless node.nil?
@@ -183,6 +184,7 @@ module Naive
   end # class
 
 
+### AVL Tree
   class AVL_Tree(A) < Tree(A)
 
     def node_balance(node : Node(A)? = @root, balance : Number = 0)
