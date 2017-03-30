@@ -45,69 +45,76 @@ module Naive
     end # add
 
 
+    ## TODO: right syntax for alias
+    # alias del = remove
+
     def del(value : A)
-      del find_node value
+      node = find_node value
+      del node.as(Node) unless node.nil?
     end
 
     # TODO: Delete
 
-    def del(node : Node(A))
+    def del(node : Node(A)?)
       parent = get_parent node
+      return nil if parent.nil?
+      
+      ## Handle teh ROOT
+
       node_is_leaf = leaf? node
+      is_left_child = parent.left_child == node ? true : false
       
       # This part only takes place if the `if` statement is true
-      left_side ? parent.left_child  = nil
+      is_left_child ? parent.left_child  = nil
                 : parent.right_child = nil if node_is_leaf
 
       unless node_is_leaf
-        left_side = parent.left_child == node ? true : false
+        parent.left_child = node.right_child unless node.right_child.nil? if is_left_child
+        parent.right_child = node.left_child unless node.left_child.nil? unless is_left_child
         
-        parent.left_child = node.right_child unless node.right_child.nil? if left_side
-        parent.right_child = node.left_child unless node.left_child.nil? unless left_side
       end # unless
     end # del
 
 
-    def children_of(node : Node(A))
-      children = [] of Node
-      unless node.left_child.nil?
-        children << node.left_child
-      end
+    def children_of(node : Node(A)? = @root)
+      children : Array(Node(A)) = [] of Node(A)
 
-      unless node.right_child.nil?
-        children << node.right_child
-      end
+      unless node.nil?
+        children << node.left_child.as(Node) unless node.left_child.nil?
+        children << node.right_child.as(Node) unless node.right_child.nil?
+      end # if 
 
       children
-    end
+    end # def
 
 
-    def leaf?(node : Node(A))
-      children(node).size == 0
+    def leaf?(node : Node(A)? = @root)
+      children_of(node).size == 0 unless node.nil?
     end
 
 
     def get_parent(value : A)
-      get_parent find_node value
+      node = find_node value
+      return get_parent node unless node.nil?
     end
 
     def get_parent(node : Node(A))
-      return nil if node == @root
+      return @root if node == @root
 
-      if node.left_child.nil? && node.right_child.nil?
-        in_order.each do |parent|
-          if parent.left_child == node && parent.right_child == node
-            parent
-          end # if
-        end # do
-      end # if
+      in_order.each do |parent|
+        if parent.left_child == node || parent.right_child == node
+          return parent
+        end # if
+      end # do
     end # get_parent
 
 
     def find_node(value = A)
       in_order.each do |x|
-        return x.value if x.value == value
+        return x if x.value == value
       end
+
+      raise "Could not find a node with the value: #{value}"
     end
 
 ### TRAVERSAL
@@ -204,9 +211,11 @@ module Naive
     end
 
 
-    # TODO
     def refresh_node_balance
-
+      in_order do |node|
+        node.balance = node_balance node
+      end
     end
+
   end
 end # module
