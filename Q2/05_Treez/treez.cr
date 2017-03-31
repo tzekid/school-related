@@ -18,13 +18,14 @@ module Naive
   #   end
   # end
 
-  puts # Newline
+  # puts # Newline
   # p dick.get_parent 7
   # p dick.find_node 7
 
   # puts # Newline
   # dick.children_of(dick.root).each{ |x| puts x.value }
 
+  p dick.del 7
   # dick.del 4
 
   puts # Newline

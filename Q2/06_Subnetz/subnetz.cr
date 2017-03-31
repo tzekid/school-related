@@ -129,11 +129,9 @@ def generate_subnets(network : Bytes, sbnmsk : Bytes, n : UInt32)
   subnetz = {} of Bytes => UInt8
   numba : UInt64 = 0_u64
   
-  
   pre = 0
   pos = 0
   sop = 3
-  # until -> while not 
   until pos == 7 || sop == 0
     until sop == 0 || sbnmsk[sop] != 0
       sop -= 1
@@ -182,7 +180,6 @@ wildcard : Bytes = Bytes.new(4)
 
 full_of_ffz : Bytes = Bytes.new(4)
 full_of_ffz.size.times{ |i| full_of_ffz[i] = 255_u8 } # fill it with ff'z
-# 255.255.255.255
 
 max_range : Bytes = Bytes.new(4)
 min_range : Bytes = Bytes.new(4)
@@ -194,9 +191,11 @@ until input == "exit" || input == "break"
   puts # Newline
 
   input = get_input("Enter an IP: ")
+  input = "97.197.0.0" if input.rstrip == ""
   ip = input.to_ip.nil? ? next : input.to_ip.as(Bytes)
 
   input = get_input("Enter a suffix for the subnetmask: ")
+  input = "10" if input == ""
   sfx = input.to_u8? ? input.to_u8 : next
 
   puts # Newline
@@ -215,6 +214,7 @@ until input == "exit" || input == "break"
 
   puts # Newline
   input = get_input("How many subnetworkz do yer need ?: ")
+  input = "7" if input == ""
   n_of_subnetz = input.to_u32 ? input.to_u32 : next
 
   subnetz = generate_subnets(ip, sbnmsk, n_of_subnetz)

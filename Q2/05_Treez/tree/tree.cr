@@ -53,27 +53,31 @@ module Naive
       del node.as(Node) unless node.nil?
     end
 
-    # TODO: Delete
 
-    def del(node : Node(A)?)
+    def del(node : Node(A))
       parent = get_parent node
       return nil if parent.nil?
-      
-      ## Handle teh ROOT
 
       node_is_leaf = leaf? node
       is_left_child = parent.left_child == node ? true : false
-      
-      # This part only takes place if the `if` statement is true
-      is_left_child ? parent.left_child  = nil
-                : parent.right_child = nil if node_is_leaf
 
-      unless node_is_leaf
-        parent.left_child = node.right_child unless node.right_child.nil? if is_left_child
-        parent.right_child = node.left_child unless node.left_child.nil? unless is_left_child
-        
-      end # unless
-    end # del
+      if node_is_leaf
+        is_left_child ? parent.left_child  = nil
+                      : parent.right_child = nil
+
+        return true
+      end 
+
+      node_children = children_of(node)
+      if node_children.size == 1
+        unless node.left_child.nil?; parent.left_child  = node.left_child; return false; end
+        unless node.right_child.nil?; parent.right_child  = node.right_child; return true; end
+      end
+
+      return false
+      # left_child
+      # right_child
+    end
 
 
     def children_of(node : Node(A)? = @root)
@@ -111,6 +115,13 @@ module Naive
 
     def find_node(value = A)
       in_order.each do |x|
+        end
+      else
+        break
+      end # unless else
+      end # loop
+    end # add
+
         return x if x.value == value
       end
 
@@ -146,6 +157,7 @@ module Naive
           in_order(node.right_child, nodez)
         end
       end
+
       nodez
     end
 
