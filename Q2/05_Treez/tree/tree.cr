@@ -115,13 +115,6 @@ module Naive
 
     def find_node(value = A)
       in_order.each do |x|
-        end
-      else
-        break
-      end # unless else
-      end # loop
-    end # add
-
         return x if x.value == value
       end
 
