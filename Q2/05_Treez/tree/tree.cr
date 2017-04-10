@@ -13,6 +13,15 @@ module Naive
     end
 
 
+    def add(*values)
+      values.each{ |val| add val }
+    end
+
+    def add(node : Node)
+      da_value = node.value
+      add(da_value) unless da_value.nil?
+    end
+
     def add(value)
       if @root.nil?
         @root = Node(A).new value
@@ -50,16 +59,30 @@ module Naive
 
     def del(value : A)
       node = find_node value
-      del node.as(Node) unless node.nil?
+      
+      node.nil? ? "#{value} not found" : del node
     end
 
 
+    # TODO: refractor del
     def del(node : Node(A))
-      parent = get_parent node
+      parent = get_parent(node)
       return nil if parent.nil?
+      node.children.each{ |n| puts "#{ (node.left_child == n ? "left_child" : "right_child") }: #{n.value}" } # debug
+
+      if node == @root
+            
+      end
+      
+      children = node.children
+
+      puts "Its parent is #{parent}"
 
       node_is_leaf = leaf? node
       is_left_child = parent.left_child == node ? true : false
+
+      puts "It is a leaf"     if node_is_leaf                                          # debug
+      puts "It is the " + (is_left_child ? "left" : "right") + "_child of his parent"  # debug
 
       if node_is_leaf
         is_left_child ? parent.left_child  = nil
@@ -68,32 +91,44 @@ module Naive
         return true
       end 
 
-      node_children = children_of(node)
-      if node_children.size == 1
-        unless node.left_child.nil?; parent.left_child  = node.left_child; return false; end
-        unless node.right_child.nil?; parent.right_child  = node.right_child; return true; end
-      end
 
-      return false
-      # left_child
-      # right_child
+      if children.size == 1
+        unless node.left_child.nil?
+          parent.left_child = node.left_child
+          return true
+        else
+          parent.right_child = node.right_child
+          return true
+        end
+
+      else
+        parent.right_child = nil unless is_left_child        
+        parent.left_child  = nil if     is_left_child
+        
+        children.reverse_each{ |x| add x }
+        
+        return true
+      end
+      
+      false
     end
 
+    def change_parent_to(value1 : A, value2 : A)
+      change_parent_to(( find_node(value1).as(Node) ).as(Node), value2)
+    end
 
-    def children_of(node : Node(A)? = @root)
-      children : Array(Node(A)) = [] of Node(A)
+    # def change_parent_to(node : Node(A)?, value : A)
+    #   parent = get_parent node
+    #   raise "dick" if parent.nil?
+    #   puts "Parent was: #{parent.value}"
+    #   parent.value = value unless parent.nil?
+    #   puts "Parent should be: #{parent.value}"
+    # end
 
-      unless node.nil?
-        children << node.left_child.as(Node) unless node.left_child.nil?
-        children << node.right_child.as(Node) unless node.right_child.nil?
-      end # if 
-
-      children
-    end # def
 
 
     def leaf?(node : Node(A)? = @root)
-      children_of(node).size == 0 unless node.nil?
+      node.children.size == 0 unless node.nil?
     end
 
 
@@ -103,22 +138,25 @@ module Naive
     end
 
     def get_parent(node : Node(A))
-      return @root if node == @root
+      return nil if node == @root
 
-      in_order.each do |parent|
+      breadth_first.each do |parent|
+        puts "Checking #{parent.value}"
         if parent.left_child == node || parent.right_child == node
           return parent
         end # if
       end # do
+
+      nil
     end # get_parent
 
 
     def find_node(value = A)
-      in_order.each do |x|
+      breadth_first.each do |x|
         return x if x.value == value
       end
 
-      raise "Could not find a node with the value: #{value}"
+      nil
     end
 
 ### TRAVERSAL
@@ -193,10 +231,9 @@ module Naive
       
       nodez
     end
-  end # class
+  end
 
 
-### AVL Tree
   class AVL_Tree(A) < Tree(A)
 
     def node_balance(node : Node(A)? = @root, balance : Number = 0)
